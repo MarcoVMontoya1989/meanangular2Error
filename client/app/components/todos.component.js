@@ -1,0 +1,60 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var todo_service_1 = require('../services/todo.service');
+var TodosComponent = (function () {
+    function TodosComponent(_services) {
+        this._services = _services;
+    }
+    TodosComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.todos = [];
+        this._services.getTodo().subscribe(function (res) {
+            console.log(res);
+            _this.todos = res;
+        });
+    };
+    ;
+    TodosComponent.prototype.addTodo = function (event, todoText) {
+        var _this = this;
+        console.log(todoText.value);
+        var resultado;
+        var newTodo = {
+            text: todoText.value,
+            isCompleted: false
+        };
+        resultado = this._services.saveTodo(newTodo).subscribe(function (res) {
+            _this.todos.push(newTodo);
+            todoText = '';
+        });
+    };
+    ;
+    TodosComponent.prototype.setEditState = function (todo, state) {
+        if (state) {
+            todo.isEditMode = state;
+        }
+        else {
+            delete todo.isEditMode;
+        }
+    };
+    ;
+    TodosComponent = __decorate([
+        core_1.Component({
+            moduleId: module.id,
+            selector: 'todos',
+            templateUrl: 'todos.component.html',
+        }), 
+        __metadata('design:paramtypes', [todo_service_1.TodosService])
+    ], TodosComponent);
+    return TodosComponent;
+}());
+exports.TodosComponent = TodosComponent;
+//# sourceMappingURL=todos.component.js.map
